@@ -1,0 +1,18 @@
+.eyes{
+    height: 25px;
+    width: 20px;
+}
+
+.buttonNoHover:hover {
+    background-color: inherit !important;
+    box-shadow: none !important;
+}
+
+.loginLink{
+    color: #ffa042;
+}
+
+.loginLink:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}

@@ -1,0 +1,51 @@
+.header {
+  padding: 5px 100px;
+  background-color: #ffa042;
+}
+
+.logoImg {
+  width: 200px;
+}
+
+.productSearch {
+  width: 500px;
+}
+
+.searchIcon {
+  height: 20px;
+  width: 20px;
+}
+
+.shoppingCartNumberBox {
+  width: 20px; /* 或根據你設計的大小調整 */
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border-radius: 50%;
+  bottom: 15px;
+  left: 15px;
+}
+
+.shoppingCartNumber {
+  color: #ffa042;
+}
+
+.shoppingCartIcon {
+  height: 30px;
+  width: 30px;
+}
+
+.userHeadShotBox {
+  top: -28px;
+}
+
+.userHeadShot {
+  height: 40px;
+  width: 40px;
+}
+
+.signOutText:hover {
+  cursor: pointer;
+}

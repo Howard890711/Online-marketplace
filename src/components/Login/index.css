@@ -1,0 +1,13 @@
+.logoIcon{
+    height: 230px;
+    width: 250px;
+}
+
+.registerLink{
+    color: #ffa042;
+}
+
+.registerLink:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}

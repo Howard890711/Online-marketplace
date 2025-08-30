@@ -1,0 +1,58 @@
+.homePage{
+  padding: 60px 100px;
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  row-gap: 40px;
+  column-gap: 16px;
+}
+
+.productBox:hover{
+  transform: scale(1.1);
+}
+
+.productImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.productDiscount {
+  right: 5px;
+  top: 3px;
+  background-color: #ffa042;
+  font-size: 14px;
+  padding: 3px 5px;
+  color: white;
+  width: 50px;
+  align-items: center;
+  text-align: center;
+}
+
+.productNameBox {
+  height: 45px;
+}
+
+.productName {
+  white-space: keep-all;
+  white-space: normal; /* 允許換行，但不會亂斷 */
+  display: -webkit-box;
+  -webkit-box-orient: vertical; /*垂直顯示*/
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.productStarBox {
+  background-color: #fffdd0;
+}
+
+.starIcon {
+  height: 20px;
+  width: 20px;
+}

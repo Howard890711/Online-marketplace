@@ -1,0 +1,112 @@
+.productDetailPage{
+    padding: 60px 100px;
+}
+
+.boxSpace{
+    display: flex;
+    align-items: center;
+}
+
+.productImg{
+    height: 500px;
+    width: 500px;
+}
+
+.ratingIcon{
+    width: 100px;
+    height: 20px;
+}
+
+.productPriceBox{
+    background-color: #F5F5F5;
+    width: 100%;
+}
+
+.productDiscount{
+    background-color: #ffa042;
+    color: white;
+}
+
+.productQuantity{
+    width: 60px;
+}
+
+.addToCart{
+    padding: 10px;
+    height: auto;
+    width: 160px;
+    font-size: 20px;
+    border: 2px solid #ffa042;
+    background-color: #FFE4CA;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    color: #ffa042;
+}
+
+.addToCartIcon{
+    width: 20px;
+    height: auto;
+    margin: 5px;
+    fill: #ffa042;
+}
+
+.buyNow{
+    padding: 10px;
+    height: auto;
+    width: 160px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    background-color: #ffa042;
+    color: white;
+    border-radius: 0.25rem;
+    border: 2px solid #ffa042;
+}
+
+.productInformationTitle{
+    background-color: #F5F5F5;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.productInformation{
+    padding: 20px;
+}
+
+.productCommentContainer{
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 20px;
+}
+
+.productCommentContent{
+    display: flex;
+}
+
+.commentUserImg{
+    height: 80px;
+    width: 80px;
+    margin-right: 20px;
+}
+
+.commentRating{
+    height: 20px;
+    width: 100px;
+}
+
+
+
+.checkIcon{
+    height: 30px;
+    width: 30px;
+}
+
+.showMessage{
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.showMessage.show{
+    opacity: 1;
+}

@@ -1,0 +1,20 @@
+[
+    {
+      "objectId":"03J8ooAnOz9UmN2pNb9m",
+      "name":"【蠟筆小新】抽取式衛生紙 100抽*10包",
+      "discount":7,
+      "imageUrl":"/images/product_images/12.jpg",
+      "price":199,
+      "sold":681,
+      "star":3.6
+    },
+    {
+      "objectId":"0lGaIDCJYbQb62fMmefB",
+      "name":"【嬌潤泉】臻顏淨透潔面乳 100g 七老闆推薦 官方授權 現貨免運 洗面乳 胺基酸 洗面奶 嬌潤泉洗面乳 溫和 氨基酸",
+      "discount":65,
+      "imageUrl":"/images/product_images/13.jpg",
+      "price":400,
+      "sold":6127,
+      "star":4.8
+    }
+  ]

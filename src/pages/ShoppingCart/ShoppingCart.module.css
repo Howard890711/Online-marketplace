@@ -1,0 +1,70 @@
+.shoppingCartPage{
+    position: relative;
+}
+
+.shoppingCartContainer{
+    padding: 60px 100px;
+}
+
+
+.cartGrid{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+input[type="checkbox"]{
+    transform: scale(1.5);
+}
+
+.titleGrid{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.contentGrid{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .productDelete:hover{
+        text-decoration: underline;
+    }
+}
+
+.cartProduct{
+   background-color: white; 
+   padding:20px;
+}
+
+.productImg{
+    height: 100px;
+    width: 100px;
+}
+
+.productName{
+    width: 200px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* 顯示2行 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+.productQuantity{
+    width: 40px;
+}
+
+
+.shadowTop{
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* 上方陰影 */
+}
+
+.checkoutBox{
+    padding: 0 100px!important;
+    position: sticky;
+    bottom: 0;
+    margin-bottom: 5px;
+}

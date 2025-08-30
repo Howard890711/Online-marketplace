@@ -1,0 +1,16 @@
+.formPadding {
+  padding: 30px 60px;
+}
+
+.myAccountBtn {
+  width: 100px;
+}
+
+.userImg {
+  width: 150px;
+  height: 150px;
+}
+
+.myAccountBtn {
+  background-color: #ffa042;
+}

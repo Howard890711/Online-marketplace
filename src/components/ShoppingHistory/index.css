@@ -1,0 +1,58 @@
+  .historySearchBox {
+    position: relative;
+  }
+  .historySearchIcon {
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    left: 10px;
+    top: 10px;
+  }
+
+  .productListBox {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .productImg {
+    height: 100px;
+    width: 100px;
+  }
+
+  .productName {
+    max-width: 700px;
+  }
+
+  .orderInfo {
+    background-color: rgb(250, 242, 231);
+  }
+  
+  .buyAgainBtn {
+    background-color: #ffa042;
+    border: 2px solid #ffa042;       /* 邊框橘色 */
+
+  }
+
+  .buyAgainBtn:hover,
+  .buyAgainBtn:focus{
+    background-color: #e58a00;
+    border-color: #e58a00;
+  }
+  .commentBtn {
+    border: 2px solid #ffa042;       /* 邊框橘色 */
+    color: #ffa042;
+    background-color: rgb(250, 242, 231);
+  }
+
+  .commentBtn:hover,
+  .commentBtn:focus{
+    background-color: rgb(230, 220, 200);
+    border-color: rgb(230, 220, 200);
+  }
+
+  .invisible-space{
+    visibility: hidden;
+  }
+
+
