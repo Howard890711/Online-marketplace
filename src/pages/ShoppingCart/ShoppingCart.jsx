@@ -256,7 +256,7 @@ export default function ShoppingCart() {
                     }
                   />
                 </label>
-                <img src={productData.imageUrl} className={style.productImg} />
+                <img src={productData.imageUrl} className={style.productImg} alt="productImg"/>
                 <div className="align-self-start p-2 fw-bold ms-2">
                   <div className={style.productName}>{productData.name}</div>
                 </div>

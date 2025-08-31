@@ -193,6 +193,7 @@ export default function HomePage() {
                     <img
                       src={product.imageUrl}
                       className={`${style.productImg} rounded-top`}
+                      alt="productImg"
                     />
                     <span
                       className={`${style.productDiscount} rounded fw-bold position-absolute`}
@@ -221,6 +222,7 @@ export default function HomePage() {
                         <img
                           src="/images/icons/home-star.png"
                           className={style.starIcon}
+                          alt="starIcon"
                         />
                         <span className="mx-1">{setStarNum(product.star)}</span>
                       </div>

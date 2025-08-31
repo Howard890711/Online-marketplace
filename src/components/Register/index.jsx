@@ -122,9 +122,9 @@ export default function Register({ setFormMode }) {
               onClick={()=>setShowPassword(prev=>!prev)}
             >
               {showPassword ? (
-                <img src="/images/icons/openEyes.png" className="eyes" />
+                <img src="/images/icons/openEyes.png" className="eyes" alt="openEyes"/>
               ) : (
-                <img src="/images/icons/closeEyes.png" className="eyes" />
+                <img src="/images/icons/closeEyes.png" className="eyes" alt="closeEyes"/>
               )}
             </button>
           </div>
@@ -151,9 +151,9 @@ export default function Register({ setFormMode }) {
               onClick={()=>setShowCheckPassword(prev=>!prev)}
             >
               {showCheckPassword ? (
-                <img src="/images/icons/openEyes.png" className="eyes" />
+                <img src="/images/icons/openEyes.png" className="eyes" alt="openEyes"/>
               ) : (
-                <img src="/images/icons/closeEyes.png" className="eyes" />
+                <img src="/images/icons/closeEyes.png" className="eyes" alt="closeEyes"/>
               )}
             </button>
           </div>

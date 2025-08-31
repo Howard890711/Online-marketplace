@@ -258,7 +258,7 @@ export default function Checkout() {
           return (
             <div className="row d-flex align-items-center mb-3" key={productId}>
               <div className="col-6 d-flex align-items-center">
-                <img src={imageUrl} className={style.productImg} />
+                <img src={imageUrl} className={style.productImg} alt="productImg"/>
                 <h5 className="ms-4">{name}</h5>
               </div>
               <div className="col-2 text-end">

@@ -49,7 +49,7 @@ export default function Header() {
     <header className="header">
       <div className="d-flex align-items-center">
         <Link to="/" className="justify-content-center">
-          <img src="/images/icons/logoDog.png" className="logoImg" />
+          <img src="/images/icons/logoDog.png" className="logoImg" alt="logoImg"/>
         </Link>
         <div className="input-group w-50 ms-auto align-items-center">
           <input
@@ -67,6 +67,7 @@ export default function Header() {
             <img
               src={process.env.PUBLIC_URL + "/images/icons/searchIcon.png"}
               className="searchIcon"
+              alt="searchIcon"
             />
           </button>
 
@@ -82,6 +83,7 @@ export default function Header() {
                   <img
                     src="/images/icons/cart.png"
                     className="shoppingCartIcon"
+                    alt="shoppingCartIcon"
                   />
                 </Link>
               </div>
@@ -97,6 +99,7 @@ export default function Header() {
                     <img
                       src={userImg}
                       className="userHeadShot rounded-circle"
+                      alt="userHeadShot"
                     />
                   </button>
                   <ul

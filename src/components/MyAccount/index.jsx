@@ -364,6 +364,7 @@ export default function MyAccount() {
                 <img
                   src={formData.userImg}
                   className="userImg rounded-circle"
+                  alt="userImg"
                 />
               )}
               <input

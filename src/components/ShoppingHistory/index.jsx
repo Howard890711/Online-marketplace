@@ -18,10 +18,14 @@ export default function ShoppingList() {
   const [activeIndex, setActiveIndex] = useState(0); //觀察使用者評論到第幾個頁面
   const [selectOrder, setSelectOrder] = useState(null); //使用者選取的訂單
   const [commentData, setCommentData] = useState({}); //存取使用者評論
-  const [reviewSuccessMsg, setReviewSuccessMsg] = useState(false);
-  const [selectItems, setSelectItems] = useState(new Map()); //放在買一次的商品
   const carouselRef = useRef(null); //負責綁定
   const carouselInstanceRef = useRef(null); //儲存綁定的實例
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [searchResults, setSearchResults] = useState(null);
+  const [searched,setSearched]=useState(false)
+  const displayOrders = searched ? searchResults:orders;
+  console.log(orders);
+
 
   useEffect(() => {
     setIsLoading(true);
@@ -98,11 +102,7 @@ export default function ShoppingList() {
           button: true,
           dangerMode: false,
         });
-        setReviewSuccessMsg(true);
-        setTimeout(() => {
-          setReviewSuccessMsg(false);
-        }, 3000);
-        handleCloseModal()
+        handleCloseModal();
       })
       .catch((error) => {
         console.log("上傳失敗", error);
@@ -131,7 +131,7 @@ export default function ShoppingList() {
     products.forEach((product) => {
       initial[product.productId] = {
         star: 0,
-        hover:0,
+        hover: 0,
         quality: "",
         colorAccuracy: "",
         matchWithPicture: "",
@@ -169,17 +169,6 @@ export default function ShoppingList() {
     setCommentData({});
   };
 
-  // const handleDiscountPrice = (discount, price) => {
-  //   let discountRate;
-
-  //   if (discount > 10) {
-  //     discountRate = discount / 100;
-  //   } else {
-  //     discountRate = discount / 10;
-  //   }
-  //   return Math.floor(discountRate * price);
-  // };
-
   const handleInputChange = (productId, field, value) => {
     setCommentData((prev) => ({
       ...prev,
@@ -188,7 +177,6 @@ export default function ShoppingList() {
         [field]: value,
       },
     }));
-    console.log(commentData);
   };
 
   const formDate = (date) => {
@@ -199,19 +187,43 @@ export default function ShoppingList() {
     });
   };
 
+  const searchOrder = (e) => {
+    if (e.key === "Enter") {
+      if (searchKeyword === "") {
+        setSearchResults([]);
+        return;
+      }
+      const lowerSearchKeyword = searchKeyword.toLowerCase();
+      const filtered = orders.filter((order) => {
+        const orderIdMatch = order.orderId
+          .toLowerCase()
+          .includes(lowerSearchKeyword);
+        const productNameMatch = order.products.some((product) =>
+          product.name.toLowerCase().includes(lowerSearchKeyword)
+        );
+        return orderIdMatch || productNameMatch;
+      });
+      setSearchResults(filtered);
+      setSearched(true);
+    }
+  };
+
   return (
     <div className="shoppingListPage">
       <h2 className="ms-4">歷史訂單</h2>
       <div className="historySearchBox bg-light mb-3">
         <img
           className="historySearchIcon"
-          alt="icon"
+          alt="searchIcon"
           src="/images/icons/searchIcon.png"
         />
         <input
           className="bg-light w-100 border-0 ps-5 p-3 "
           type="search"
           placeholder="您可以透過商品名稱或訂單編號搜尋"
+          value={searchKeyword}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+          onKeyDown={searchOrder}
         />
       </div>
       {isLoading ? (
@@ -220,8 +232,12 @@ export default function ShoppingList() {
             <span className="visually-hidden">Loading...</span>
           </div>
         </div>
+      ) : searched && searchResults.length === 0 ? (
+        <div className="text-center p-3 text-secondary">
+          未找到符合條件的的訂單
+        </div>
       ) : (
-        orders.map((order) => (
+        displayOrders.map((order) => (
           <div className="orderBox mb-3" key={order.orderId}>
             {/*一筆訂單*/}
 
@@ -233,7 +249,11 @@ export default function ShoppingList() {
                     className="productBox d-flex p-3 shadow-sm"
                     key={product.productId}
                   >
-                    <img src={product.imageUrl} className="productImg border" />
+                    <img
+                      src={product.imageUrl}
+                      className="productImg border"
+                      alt="productImg"
+                    />
                     <div className="ms-3 d-flex flex-column gap-4 w-100">
                       <div className="productName">
                         <h5>{product.name}</h5>
@@ -343,6 +363,7 @@ export default function ShoppingList() {
                         src={product.imageUrl}
                         style={{ height: "80px", width: "80px" }}
                         className="border me-2"
+                        alt="ModalProductImg"
                       />
                       <span className="fw-bold fs-5">{product.name}</span>
                     </div>
@@ -367,10 +388,22 @@ export default function ShoppingList() {
                                   star
                                 );
                               }}
-                              onMouseEnter={() => handleInputChange(product.productId,"hover",star)}
-                              onMouseLeave={() => handleInputChange(product.productId,"hover",0)}
+                              onMouseEnter={() =>
+                                handleInputChange(
+                                  product.productId,
+                                  "hover",
+                                  star
+                                )
+                              }
+                              onMouseLeave={() =>
+                                handleInputChange(product.productId, "hover", 0)
+                              }
                               color={
-                                (commentData[product.productId].hover || commentData[product.productId].star||0) >= star ? "#ffa042" : "#ccc"
+                                (commentData[product.productId].hover ||
+                                  commentData[product.productId].star ||
+                                  0) >= star
+                                  ? "#ffa042"
+                                  : "#ccc"
                               }
                               style={{ cursor: "pointer" }}
                             />

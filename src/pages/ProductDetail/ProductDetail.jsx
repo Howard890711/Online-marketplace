@@ -188,7 +188,7 @@ export default function ProductDetail() {
       <div className="d-flex flex-column gap-5">
         <div className="bg-white p-3">
           <div className="d-flex">
-            <img src={product.imageUrl} className={style.productImg} />
+            <img src={product.imageUrl} className={style.productImg} alt="productImg"/>
             <div className="p-3 ms-3 d-flex flex-column gap-4 flex-grow-1">
               <h3 className="fw-bold">{product.name}</h3>
               <div className={`${style.boxSpace} gap-2 fs-5 `}>
@@ -197,6 +197,7 @@ export default function ProductDetail() {
                     product.star
                   )}.png`}
                   className={style.ratingIcon}
+                  alt="starIcon"
                 />
                 <span>{product.star}</span>
                 <span>|</span>
@@ -270,6 +271,7 @@ export default function ProductDetail() {
                     <img
                       src="/images/icons/check.png"
                       className={style.checkIcon}
+                      alt="checkIcon"
                     />
                     <div>已新增至購物車</div>
                   </div>
@@ -304,6 +306,7 @@ export default function ProductDetail() {
                   <img
                     src={comment.userImg}
                     className={`${style.commentUserImg} rounded-circle`}
+                    alt="commentUserImg"
                   />
                   <article className="d-flex flex-column gap-1">
                     <span className="fs-5 fw-bold">{comment.userName}</span>
@@ -312,7 +315,7 @@ export default function ProductDetail() {
                         comment.star
                       )}.png`}
                       className={style.commentRating}
-                      alt="評分兩顆星"
+                      alt="commentRating"
                     />
                     <div className="mt-2">
                       <div className="mb-2 text-secondary d-flex flex-row gap-2">
