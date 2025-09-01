@@ -9,7 +9,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 
-export default function ShoppingList() {
+export default function ShoppingHistory() {
   const { userData, orderData } = useUser();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);

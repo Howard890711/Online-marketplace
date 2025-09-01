@@ -11,7 +11,6 @@ import {
 } from "firebase/firestore";
 import { useUser } from "../../UserContext";
 import { db } from "../../utils/firebase";
-import { TbRuler2 } from "react-icons/tb";
 
 export default function Checkout() {
   const location = useLocation();
@@ -232,7 +231,7 @@ export default function Checkout() {
         },
       }));
     }
-  }, [formData.paymentMethodData.paymentMethod]);
+  }, [formData.paymentMethodData.mobilePay,formData.paymentMethodData.paymentMethod]);
 
   return (
     <div className={style.checkoutPage}>

@@ -58,7 +58,6 @@ export const UserProvider = ({ children }) => {
           })
           .finally(() => {
             setLoading(false);
-            console.log(userData)
           });
       } else {
         // 使用者登出
