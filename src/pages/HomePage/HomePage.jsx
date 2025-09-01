@@ -110,7 +110,7 @@ export default function HomePage() {
         loadMoreProducts();
       }
     },
-    [listLoadingMore, hasMore, loadMoreProducts]
+    [listLoadingMore, hasMore, loadMoreProducts,keyword]
   );
 
   useEffect(() => {

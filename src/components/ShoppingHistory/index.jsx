@@ -117,7 +117,7 @@ export default function ShoppingHistory() {
 
   const handleBuyAgain = (order) => {
     const newMap = new Map();
-    order.products.map((product) => {
+    order.products.forEach((product) => {
       newMap.set(product.productId, {
         productId: product.productId,
         productQuantity: product.productQuantity,
