@@ -9,7 +9,6 @@ import { getStorage,ref,getDownloadURL } from "firebase/storage";
 export default function Header() {
   const { cartData, userData } = useUser();
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [result, setResult] = useState([]);
   const [userImg,setUserImg]=useState(null)
   const navigate = useNavigate();
 

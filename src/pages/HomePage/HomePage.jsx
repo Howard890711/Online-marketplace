@@ -17,7 +17,6 @@ export default function HomePage() {
   const params = new URLSearchParams(location.search);
   const keyword = params.get("keyword");
 
-  const [result, setResult] = useState([]);
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false); //viewPort載入
@@ -27,7 +26,6 @@ export default function HomePage() {
   const [displayProducts,setDisplayProducts]=useState([])
   const observerRef = useRef();
   const productLimit = 10;
-  console.log(products);
 
 
 
@@ -44,17 +42,9 @@ export default function HomePage() {
       setIsLoading(true);
       try {
         const result = await algolia.search(keyword);
-        console.log(result.hits);
-        setResult(result.hits);
         setDisplayProducts(result.hits)
       } catch (error) {
         console.log("搜尋錯誤:", error);
-        setResult([
-          {
-            error: true,
-            message: error.message || "搜尋失敗",
-          },
-        ])
         setDisplayProducts([])
       } finally {
         setIsLoading(false);
