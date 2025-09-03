@@ -1,19 +1,34 @@
-.header {
+.headerContainer {
   padding: 5px 100px;
-  background-color: #ffa042;
+  background-color: var(--main-color);
+}
+
+.headerContent{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .logoImg {
   width: 200px;
 }
 
-.productSearch {
-  width: 500px;
+.headerRight{
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.searchInput{
+  width: 400px;
+  padding: 0.5rem;
 }
 
 .searchIcon {
   height: 20px;
   width: 20px;
+  display: block;
+  object-fit: contain;
 }
 
 .shoppingCartNumberBox {
@@ -29,7 +44,7 @@
 }
 
 .shoppingCartNumber {
-  color: #ffa042;
+  color: var(--main-color);
 }
 
 .shoppingCartIcon {
@@ -37,8 +52,17 @@
   width: 30px;
 }
 
-.userHeadShotBox {
-  top: -28px;
+.dropdown-menu.userDropDown{
+  min-width: auto;
+  width: 10rem;
+}
+
+.userHeadShotBtn{
+  background-color: var(--main-color);
+}
+
+.dropdown-toggle{
+  padding: 0 !important;
 }
 
 .userHeadShot {
@@ -48,4 +72,71 @@
 
 .signOutText:hover {
   cursor: pointer;
+}
+
+@media screen and (max-width:1024px) and (min-width:768px) {
+  
+}
+
+@media screen and (max-width:767px){
+  .headerContainer {
+    padding:15px;
+  }
+
+  .headerRight{
+    gap: 1.25rem;
+  }
+  
+  
+  .logoImg {
+    width: 50px;
+  }
+
+  .input-group{
+    width: 200px;
+  }
+  
+  .searchInput{
+    width: 150px;
+    padding: 0px 10px;
+    font-size: 10px;
+  }
+  
+   .searchBtn{
+    height: 25px;
+    width: 25px;
+  }
+
+  .searchIcon {
+    height: 10px;
+    width: 10px;
+  }
+
+
+  .shoppingCartNumberBox {
+    width: 15px; /* 或根據你設計的大小調整 */
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    border-radius: 50%;
+  }
+
+  .shoppingCartIcon {
+    height: 20px;
+    width: 20px;
+  }
+  
+  
+  .userHeadShot {
+    height: 25px;
+    width: 25px;
+  }
+
+  .dropdown-menu.userDropDown{
+    width: 100px;
+    font-size: 14px;
+  }
+  
 }

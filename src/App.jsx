@@ -16,7 +16,7 @@ function App() {
   return (
     <UserProvider>
       <BrowserRouter>
-        <div className="d-flex flex-column min-vh-100">
+        <div className="d-flex flex-column min-vh-100 w-100">
           <Header />
           <div className="flex-grow-1">
             <ScrollToTop />

@@ -4,26 +4,35 @@ import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { useUser } from "../../UserContext";
-import { getStorage,ref,getDownloadURL } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 export default function Header() {
   const { cartData, userData } = useUser();
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [userImg,setUserImg]=useState(null)
+  const [userImg, setUserImg] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!userData)return;
-    const storage=getStorage()
-    const imgPath=userData.userImg?userData.userImg:"defaultImages/userImg.png"
-    const defaultRef=ref(storage,imgPath)
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize); //視窗大小改變時呼叫
+    return () => window.removeEventListener("resize", handleResize); //清除事件
+  }, []);
+
+  useEffect(() => {
+    if (!userData) return;
+    const storage = getStorage();
+    const imgPath = userData.userImg
+      ? userData.userImg
+      : "defaultImages/userImg.png";
+    const defaultRef = ref(storage, imgPath);
     getDownloadURL(defaultRef)
-    .then((url)=>{
-      setUserImg(url)
-    })
-    .catch(err=>{
-      console.error("載入頭像失敗",err)
-    })
+      .then((url) => {
+        setUserImg(url);
+      })
+      .catch((err) => {
+        console.error("載入頭像失敗", err);
+      });
   }, [userData]);
 
   const handleSearch = (e) => {
@@ -45,51 +54,58 @@ export default function Header() {
   };
 
   return (
-    <header className="header">
-      <div className="d-flex align-items-center">
-        <Link to="/" className="justify-content-center">
-          <img src="/images/icons/logoDog.png" className="logoImg" alt="logoImg"/>
-        </Link>
-        <div className="input-group w-50 ms-auto align-items-center">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="搜尋"
-            value={searchKeyword}
-            onChange={handleSearch}
+    <header className="headerContainer w-100">
+      <div className="headerContent">
+        <Link to="/" className="headerLogo justify-content-center">
+          <img
+            src={
+              isMobile
+                ? "/images/icons/headerLogo.png"
+                : "/images/icons/logoDog.png"
+            }
+            className="logoImg"
+            alt="logoImg"
           />
-          <button
-            className="btn searchBtn rounded-end border bg-white"
-            type="button"
-            onClick={handleSearchButton}
-          >
-            <img
-              src={process.env.PUBLIC_URL + "/images/icons/searchIcon.png"}
-              className="searchIcon"
-              alt="searchIcon"
+        </Link>
+        <div className="headerRight">
+          <div className="input-group">
+            <input
+              type="text"
+              className="border-0 rounded-start searchInput"
+              placeholder="搜尋"
+              value={searchKeyword}
+              onChange={handleSearch}
             />
-          </button>
+            <button
+              className="searchBtn border-0 rounded-end  bg-white p-2"
+              type="button"
+              onClick={handleSearchButton}
+            >
+              <img
+                src={process.env.PUBLIC_URL + "/images/icons/searchIcon.png"}
+                className="searchIcon btn-icon"
+                alt="searchIcon"
+              />
+            </button>
+          </div>
 
           {userData ? (
             <>
-              <div className="mx-4 position-relative">
-                <Link to="/ShoppingCart">
-                  <div className="position-absolute  bg-white shoppingCartNumberBox">
-                    <span className="shoppingCartNumber">
-                      {cartData.length < 99 ? cartData.length : "99+"}
-                    </span>
-                  </div>
-                  <img
-                    src="/images/icons/cart.png"
-                    className="shoppingCartIcon"
-                    alt="shoppingCartIcon"
-                  />
-                </Link>
-              </div>
-              <div className="position-relative">
-                <div className="userHeadShotBox position-absolute dropdown">
+              <Link to="/ShoppingCart" className="position-relative">
+                <div className="position-absolute top-1 bg-white shoppingCartNumberBox">
+                  <span className="shoppingCartNumber">
+                    {cartData.length < 99 ? cartData.length : "99+"}
+                  </span>
+                </div>
+                <img
+                  src="/images/icons/cart.png"
+                  className="shoppingCartIcon"
+                  alt="shoppingCartIcon"
+                />
+              </Link>
+              <div className="userHeadShotBox dropdown">
                   <button
-                    className="btn dropdown-toggle border-0"
+                    className="userHeadShotBtn dropdown-toggle border-0"
                     type="button"
                     id="userHeadShotBtn"
                     data-bs-toggle="dropdown"
@@ -102,7 +118,7 @@ export default function Header() {
                     />
                   </button>
                   <ul
-                    className="dropdown-menu mt-2"
+                    className="dropdown-menu dropdown-menu-end mt-2 userDropDown"
                     aria-labelledby="userHeadShotBtn"
                   >
                     <li>
@@ -111,7 +127,10 @@ export default function Header() {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="/Profile/ShoppingHistory">
+                      <a
+                        className="dropdown-item"
+                        href="/Profile/ShoppingHistory"
+                      >
                         購買清單
                       </a>
                     </li>
@@ -124,12 +143,11 @@ export default function Header() {
                       </span>
                     </li>
                   </ul>
-                </div>
               </div>
             </>
           ) : (
-            <Link to="/LoginForm" className="text-decoration-none">
-              <span className="ms-4 fw-bold text-white">登入</span>
+            <Link to="/LoginForm" className="text-decoration-none text-end" style={{width:"120px"}}>
+              <span className="fw-bold text-white">登入</span>
             </Link>
           )}
         </div>
