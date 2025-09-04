@@ -60,7 +60,7 @@ export default function Login({setFormMode}) {
 
 
   return (
-    <div className="p-5 bg-white">
+    <div className="loginContainer bg-white">
       <div className="text-center mb-5">
         <img src="/images/icons/login_logo.png" className="logoIcon" alt="logoIcon"/>
       </div>

@@ -201,11 +201,9 @@ export default function HomePage() {
 
                     {/* 內容 */}
                     <Card.Body className="d-flex flex-column py-2 px-1">
-                      <Card.Title
-                        className={`fs-6 mb-2 ${style.productName}`}
-                      >
+                      <div className={` mb-2 fw-bold ${style.productName}`}>
                         {product.name}
-                      </Card.Title>
+                      </div>
                       <div className="d-flex align-items-center mb-2">
                         <span className="text-danger fw-bold  me-2">
                           ${getDiscountPrice(product.discount, product.price)}

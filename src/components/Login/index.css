@@ -1,3 +1,7 @@
+.loginContainer{
+    padding:3rem;
+}
+
 .logoIcon{
     height: 230px;
     width: 250px;
@@ -10,4 +14,16 @@
 .registerLink:hover{
     text-decoration: underline;
     cursor: pointer;
+}
+
+@media screen and (max-width:767px) {
+
+    .loginContainer{
+        padding: 2rem;
+    }
+
+    .logoIcon{
+        height: 150px;
+        width: 150px;
+    }
 }

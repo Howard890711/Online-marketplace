@@ -37,6 +37,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   word-break: break-word;
+  min-height: 2.8rem;
 }
 
 .productStarBox {
@@ -53,11 +54,30 @@
     padding: 40px 80px;
   }
 
+  .productBox:hover {
+    transform: none;
+  }
+
 }
 
 @media screen and (max-width: 767px) {
   .homePage {
     padding: 10px;
+  }
+
+  .productBox:hover {
+    transform:none;
+  }
+
+  .productName{
+    font-size: 14px;
+  }
+
+  .productImg {
+    width: 100%;
+    max-height: 160px;
+    height: auto;
+    object-fit: fill;
   }
 
 

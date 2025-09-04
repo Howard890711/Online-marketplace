@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { useUser } from "../../UserContext";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 export default function Header() {
   const { cartData, userData } = useUser();
@@ -21,18 +20,10 @@ export default function Header() {
 
   useEffect(() => {
     if (!userData) return;
-    const storage = getStorage();
-    const imgPath = userData.userImg
+    const imgUrl = userData.userImg
       ? userData.userImg
-      : "defaultImages/userImg.png";
-    const defaultRef = ref(storage, imgPath);
-    getDownloadURL(defaultRef)
-      .then((url) => {
-        setUserImg(url);
-      })
-      .catch((err) => {
-        console.error("載入頭像失敗", err);
-      });
+      : "/images/head_shot/userImg.png";
+    setUserImg(imgUrl);
   }, [userData]);
 
   const handleSearch = (e) => {
@@ -104,49 +95,52 @@ export default function Header() {
                 />
               </Link>
               <div className="userHeadShotBox dropdown">
-                  <button
-                    className="userHeadShotBtn dropdown-toggle border-0"
-                    type="button"
-                    id="userHeadShotBtn"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <img
-                      src={userImg}
-                      className="userHeadShot rounded-circle"
-                      alt="userHeadShot"
-                    />
-                  </button>
-                  <ul
-                    className="dropdown-menu dropdown-menu-end mt-2 userDropDown"
-                    aria-labelledby="userHeadShotBtn"
-                  >
-                    <li>
-                      <a className="dropdown-item" href="/Profile/MyAccount">
-                        我的主頁
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="dropdown-item"
-                        href="/Profile/ShoppingHistory"
-                      >
-                        購買清單
-                      </a>
-                    </li>
-                    <li>
-                      <hr className="dropdown-divider"></hr>
-                    </li>
-                    <li>
-                      <span className="dropdown-item" onClick={handleSignOut}>
-                        登出
-                      </span>
-                    </li>
-                  </ul>
+                <button
+                  className="userHeadShotBtn dropdown-toggle border-0"
+                  type="button"
+                  id="userHeadShotBtn"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img
+                    src={userImg}
+                    className="userHeadShot rounded-circle"
+                    alt="userImg"
+                  />
+                </button>
+                <ul
+                  className="dropdown-menu dropdown-menu-end mt-2 userDropDown"
+                  aria-labelledby="userHeadShotBtn"
+                >
+                  <li>
+                    <a className="dropdown-item" href="/Profile/MyAccount">
+                      我的主頁
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      href="/Profile/ShoppingHistory"
+                    >
+                      購買清單
+                    </a>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider"></hr>
+                  </li>
+                  <li>
+                    <span className="dropdown-item" onClick={handleSignOut}>
+                      登出
+                    </span>
+                  </li>
+                </ul>
               </div>
             </>
           ) : (
-            <Link to="/LoginForm" className="text-decoration-none text-end" style={{width:"120px"}}>
+            <Link
+              to="/LoginForm"
+              className="headerLogin text-decoration-none text-end"
+            >
               <span className="fw-bold text-white">登入</span>
             </Link>
           )}
