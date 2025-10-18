@@ -399,7 +399,7 @@ export default function ProductDetail() {
           加入購物車
         </button>
         <button
-          className="btn w-50 rounded-0"
+          className="btn w-50 rounded-0 text-white"
           style={{backgroundColor:"#ffa042"}}
           onClick={() => handleShowModal("直接購買")}
         >
