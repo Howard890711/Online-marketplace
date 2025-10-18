@@ -313,7 +313,7 @@ export default function ShoppingHistory() {
                 訂單時間:{formDate(order.orderDate)}
               </span>
 
-              <div className="d-flex gap-1">
+              <div className="d-flex gap-1 mt-3">
                 <button
                   className="p-2 w-50 text-white fw-bold rounded buyAgainBtn"
                   onClick={() => handleBuyAgain(order)}

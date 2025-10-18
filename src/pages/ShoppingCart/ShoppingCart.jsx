@@ -463,7 +463,8 @@ export default function ShoppingCart() {
               :<span className="text-danger fs-4">${total}</span>
             </div>
             <button
-              className={`${style.checkoutBtn} btn btn-danger fw-bold text-white ms-3`}
+              className={`${style.checkoutBtn} btn fw-bold text-white ms-3`}
+              style={{backgroundColor:"#ffa042"}}
               onClick={handleCheckout}
             >
               去買單
