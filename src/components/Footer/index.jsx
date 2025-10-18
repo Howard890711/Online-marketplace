@@ -1,9 +1,9 @@
 import "./index.css"
 
 
-export default function index() {
+export default function Footer({className}) {
   return (
-    <footer className="footerContainer border-top text-center bg-white">
+    <footer className={`${className} footerContainer border-top text-center bg-white`}>
       <p>Copyright &copy; Howard</p>
     </footer>
   )

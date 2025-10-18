@@ -1,58 +1,82 @@
-  .historySearchBox {
-    position: relative;
-  }
-  .historySearchIcon {
-    position: absolute;
-    height: 35px;
-    width: 35px;
-    left: 10px;
-    top: 10px;
-  }
+.historySearchBox {
+  position: relative;
+}
+.historySearchIcon {
+  position: absolute;
+  height: 35px;
+  width: 35px;
+  left: 10px;
+  top: 10px;
+}
 
-  .productListBox {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
+.productListBox {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
 
+.productImg {
+  height: 100px;
+  width: 100px;
+}
+
+.HistoryProductName {
+  max-width: 700px;
+}
+
+.orderInfo {
+  background-color: rgb(250, 242, 231);
+}
+
+.buyAgainBtn {
+  background-color: #ffa042;
+  border: 2px solid #ffa042; /* 邊框橘色 */
+}
+
+.buyAgainBtn:hover,
+.buyAgainBtn:focus {
+  background-color: #e58a00;
+  border-color: #e58a00;
+}
+.commentBtn {
+  border: 2px solid #ffa042; /* 邊框橘色 */
+  color: #ffa042;
+  background-color: rgb(250, 242, 231);
+}
+
+.commentBtn:hover,
+.commentBtn:focus {
+  background-color: rgb(230, 220, 200);
+  border-color: rgb(230, 220, 200);
+}
+
+.invisible-space {
+  visibility: hidden;
+}
+
+.modalProductName {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+@media screen and (max-width: 767px) {
   .productImg {
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
   }
 
-  .productName {
-    max-width: 700px;
+  .HistoryProductName {
+    white-space: normal; /* 允許換行，但不會亂斷 */
+    display: -webkit-box;
+    -webkit-box-orient: vertical; /*垂直顯示*/
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
   }
-
-  .orderInfo {
-    background-color: rgb(250, 242, 231);
-  }
-  
-  .buyAgainBtn {
-    background-color: #ffa042;
-    border: 2px solid #ffa042;       /* 邊框橘色 */
-
-  }
-
-  .buyAgainBtn:hover,
-  .buyAgainBtn:focus{
-    background-color: #e58a00;
-    border-color: #e58a00;
-  }
-  .commentBtn {
-    border: 2px solid #ffa042;       /* 邊框橘色 */
-    color: #ffa042;
-    background-color: rgb(250, 242, 231);
-  }
-
-  .commentBtn:hover,
-  .commentBtn:focus{
-    background-color: rgb(230, 220, 200);
-    border-color: rgb(230, 220, 200);
-  }
-
-  .invisible-space{
-    visibility: hidden;
-  }
-
-
+}

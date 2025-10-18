@@ -6,11 +6,57 @@
   width: 100px;
 }
 
+.userImgBlock{
+  position: relative;
+}
+
 .userImg {
   width: 150px;
   height: 150px;
 }
 
+.userImgChangeBtn{
+  height: 50px;
+  width: 50px;
+  position:absolute;
+  bottom: 0;
+  right: 80px;
+}
+
+.userImgChangeBtn:hover{
+  cursor: pointer;
+}
+
 .myAccountBtn {
   background-color: #ffa042;
+}
+
+@media  screen and (max-width:767px) {
+  .formPadding{
+    padding: 10px;
+  }
+
+  .userImg{
+    height: 100px;
+    width: 100px;
+  }
+
+  .userImgChangeBtn{
+    height: 40px;
+    width: 40px;
+    position:absolute;
+    bottom: 0;
+    right: 120px;
+  }
+
+  .formDetailBlock{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+  }
+
+  .formInputFocus:focus{
+    outline: none;
+    box-shadow: none;
+  }
 }

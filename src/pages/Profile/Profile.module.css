@@ -1,13 +1,30 @@
 .profilePage {
   padding: 60px 150px;
-  display: flex;
-  gap: 60px;
+}
 
-  .pageBtn {
-    border:0;
-    background: transparent;
-    font-size: 1.25rem;
-    text-align: start;
-    padding: 0;
+.pageBtn {
+  border: 0;
+  background: transparent;
+  font-size: 1.25rem;
+  text-align: start;
+  padding: 0;
+}
+
+@media screen and (max-width:767px) {
+
+  .profilePage{
+    padding: 10px;
+  }
+
+  .changeBtn{
+    display: grid;
+    text-align: center;
+    justify-items: center;
+  }
+
+
+  .btnIcon{
+    height: 30px;
+    width: 30px;
   }
 }

@@ -6,6 +6,13 @@ import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import debounce from "lodash.debounce";
+import {
+  SwipeableList,
+  SwipeableListItem,
+  SwipeAction,
+  TrailingActions,
+} from "react-swipeable-list";
+import "react-swipeable-list/dist/styles.css";
 
 export default function ShoppingCart() {
   const navigate = useNavigate();
@@ -13,13 +20,13 @@ export default function ShoppingCart() {
   const [cartProduct, setCartProduct] = useState(new Map());
   const [selectItems, setSelectItems] = useState(new Map());
   const [isLoading, setIsLoading] = useState(true);
-  const [isNull,setIsNull]=useState(false)
+  const [isNull, setIsNull] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
-  const cartProductRef=useRef(cartProduct)
+  const cartProductRef = useRef(cartProduct);
 
-  useEffect(()=>{
-    cartProductRef.current=cartProduct
-  },[cartProduct])
+  useEffect(() => {
+    cartProductRef.current = cartProduct;
+  }, [cartProduct]);
 
   useEffect(() => {
     if (Array.isArray(cartData) && cartData.length > 0) {
@@ -56,18 +63,16 @@ export default function ShoppingCart() {
         })
         .finally(() => {
           setIsLoading(false);
-          setIsNull(false)
+          setIsNull(false);
         })
         .catch((error) => {
           console.log("處理商品錯誤:", error);
         });
-    }
-    else{
-      setIsNull(true)
-      setIsLoading(false)
+    } else {
+      setIsNull(true);
+      setIsLoading(false);
     }
   }, [cartData]);
-
 
   const handleDiscountPrice = (discount, price) => {
     let discountRate;
@@ -117,13 +122,11 @@ export default function ShoppingCart() {
     .filter(([productId, _]) => selectItems.has(productId))
     .reduce((sum, [_, productData]) => sum + productData.productSubtotal, 0);
 
-
   const handleDeleteProduct = (productId, cartId) => {
-
     const updated = new Map(cartProduct);
     updated.delete(productId);
     setCartProduct(updated);
-    setCartData(Array.from(updated.values()))
+    setCartData(Array.from(updated.values()));
     const newSelectItems = new Map(selectItems);
     newSelectItems.delete(productId);
     setSelectItems(newSelectItems);
@@ -193,8 +196,20 @@ export default function ShoppingCart() {
       select.set(productId, { productId, productQuantity: quantity });
       setSelectItems(select);
     }
-   
   };
+
+  const trailingActions = (productId, cartId) => (
+    <TrailingActions>
+      <SwipeAction
+        destructive={true}
+        onClick={() => handleDeleteProduct(productId, cartId)}
+      >
+        <div className="bg-danger text-nowrap text-white h-100 d-flex align-items-center justify-content-center px-3">
+          刪除
+        </div>
+      </SwipeAction>
+    </TrailingActions>
+  );
 
   const handleCheckout = () => {
     //結帳Btn
@@ -217,17 +232,63 @@ export default function ShoppingCart() {
     );
   }
 
-  if(!isLoading && isNull){
-    return(
-    <div className="text-center p-3">
-      <p className="text-muted">購物車空了~~</p>
-    </div>)
+  if (!isLoading && isNull) {
+    return (
+      <div className="text-center p-3">
+        <p className="text-muted">購物車空了~~</p>
+      </div>
+    );
+  }
+
+  function QuantityInput({ productId, productData }) {
+    return (
+      <div>
+        <button
+          className={`${style.quantityBtn} bg-white text-secondary`}
+          onClick={() => {
+            handleUpdataQuantity(productId, -1, "delta");
+            debounceUpdata(productId);
+          }}
+        >
+          -
+        </button>
+
+        <input
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          className={`${style.productQuantity} text-center border`}
+          onChange={(e) =>
+            handleUpdataQuantity(productId, e.target.value, "input")
+          }
+          value={productData.productQuantity}
+          maxLength="2"
+          onBlur={() => {
+            handleUpdataQuantity(
+              productId,
+              productData.productQuantity,
+              "blur"
+            );
+            debounceUpdata(productId);
+          }}
+        />
+        <button
+          className={`${style.quantityBtn} bg-white text-secondary`}
+          onClick={() => {
+            handleUpdataQuantity(productId, +1, "delta");
+            debounceUpdata(productId);
+          }}
+        >
+          +
+        </button>
+      </div>
+    );
   }
 
   return (
-    <div className={style.shoppingCartPage}>
+    <div>
       <div className={`${style.cartGrid} ${style.shoppingCartContainer}`}>
-        <div className="bg-white p-4 rounded row">
+        <div className="bg-white p-4 rounded d-none d-md-flex flex-row">
           <label className="col-6">
             <input
               type="checkbox"
@@ -244,139 +305,169 @@ export default function ShoppingCart() {
         </div>
         {Array.from(cartProduct).map(([productId, productData]) => {
           return (
-            <div className="bg-white p-4 rounded row" key={productId}>
-              <div className="col-6 d-flex align-items-center">
-                <label>
-                  <input
-                    type="checkbox"
-                    className="me-3"
-                    checked={isCheck(productData.productId)}
-                    onChange={() =>
-                      toggleSelect(productId, productData.productQuantity)
-                    }
+            <div key={productId}>
+              <div
+                className="bg-white p-4 rounded d-flex flex-row d-none d-md-flex"
+              >
+                <div className="col-6 d-flex align-items-center">
+                  <label>
+                    <input
+                      type="checkbox"
+                      className="me-3"
+                      checked={isCheck(productData.productId)}
+                      onChange={() =>
+                        toggleSelect(productId, productData.productQuantity)
+                      }
+                    />
+                  </label>
+                  <img
+                    src={productData.imageUrl}
+                    className={`${style.productImg} rounded`}
+                    alt="productImg"
                   />
-                </label>
-                <img src={productData.imageUrl} className={style.productImg} alt="productImg"/>
-                <div className="align-self-start p-2 fw-bold ms-2">
-                  <div className={style.productName}>{productData.name}</div>
+                  <div className="align-self-start fw-bold ps-2">
+                    <span className={style.productName}>
+                      {productData.name}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className={`${style.contentGrid} col`}>
-                <span className="text-secondary text-decoration-line-through me-2 originalPrice">
-                  ${productData.price}
-                </span>
-                <span className="fw-bold discountPrice">
-                  $
-                  {handleDiscountPrice(productData.discount, productData.price)}
-                </span>
-              </div>
-              <div className={`${style.contentGrid} col`}>
-                <div>
-                  <button
-                    className="bg-white border"
-                    onClick={() => {
-                      handleUpdataQuantity(productId, -1, "delta");
-                      debounceUpdata(productId);
-                    }}
-                  >
-                    -
-                  </button>
 
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    className={`${style.productQuantity} text-center border`}
-                    onChange={(e) =>
-                      handleUpdataQuantity(productId, e.target.value, "input")
-                    }
-                    value={productData.productQuantity}
-                    maxLength="2"
-                    onBlur={() =>{
-                      handleUpdataQuantity(
-                        productId,
-                        productData.productQuantity,
-                        "blur"
-                      );
-                    debounceUpdata(productId)}
-                    }
+                <div className={`${style.contentGrid} col d-none d-md-flex`}>
+                  <span className="text-secondary d-none d-md-block text-decoration-line-through me-2 originalPrice">
+                    ${productData.price}
+                  </span>
+                  <span className="fw-bold discountPrice">
+                    $
+                    {handleDiscountPrice(
+                      productData.discount,
+                      productData.price
+                    )}
+                  </span>
+                </div>
+                <div className={`${style.contentGrid} col d-none d-md-flex`}>
+                  <QuantityInput
+                    productId={productId}
+                    productData={productData}
                   />
+                </div>
+                <div className={`${style.contentGrid} col d-none d-md-flex`}>
+                  <span className="text-danger fw-bold">
+                    ${productData.productSubtotal}
+                  </span>
+                </div>
+                <div className={`${style.contentGrid} col d-none d-md-flex`}>
                   <button
-                    className="bg-white border"
-                    onClick={() => {
-                      handleUpdataQuantity(productId, +1, "delta");
-                      debounceUpdata(productId);
-                    }}
+                    className={`${style.productDelete} border-0 bg-white`}
+                    onClick={() =>
+                      handleDeleteProduct(
+                        productData.productId,
+                        productData.cartId
+                      )
+                    }
                   >
-                    +
+                    刪除
                   </button>
                 </div>
               </div>
-              <div className={`${style.contentGrid} col`}>
-                <span className="text-danger fw-bold">
-                  ${productData.productSubtotal}
-                </span>
-              </div>
-              <div className={`${style.contentGrid} col`}>
-                <button
-                  className={`${style.productDelete} border-0 bg-white`}
-                  onClick={() =>
-                    handleDeleteProduct(
-                      productData.productId,
-                      productData.cartId
-                    )
-                  }
+              {/*手機版 */}
+              <SwipeableList className="d-md-none">
+                <SwipeableListItem
+                  trailingActions={trailingActions(
+                    productData.productId,
+                    productData.cartId
+                  )}
                 >
-                  刪除
-                </button>
-              </div>
+                  <div className="bg-white p-2 rounded d-flex flex-row w-100">
+                    <div className="col-4 d-flex align-items-center">
+                      <label>
+                        <input
+                          type="checkbox"
+                          className="me-3"
+                          checked={isCheck(productData.productId)}
+                          onChange={() =>
+                            toggleSelect(productId, productData.productQuantity)
+                          }
+                        />
+                      </label>
+                      <img
+                        src={productData.imageUrl}
+                        className={`${style.productImg} rounded`}
+                        alt="productImg"
+                      />
+                    </div>
+                    <div className="d-flex flex-column justify-content-between w-100">
+                      <div>
+                        <div className="align-self-start fw-bold">
+                          <span className={style.productName}>
+                            {productData.name}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="d-flex justify-content-between">
+                        <span className="fw-bold text-danger">
+                          $
+                          {handleDiscountPrice(
+                            productData.discount,
+                            productData.price
+                          )}
+                        </span>
+                        <QuantityInput
+                          productId={productId}
+                          productData={productData}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </SwipeableListItem>
+              </SwipeableList>
             </div>
           );
         })}
       </div>
 
-      <div className={`${style.checkoutBox}`}>
-        <div className={style.checkout}>
-          <div className="shadow-lg row bg-white rounded p-4 d-flex align-items-center">
-            <label className="col-6">
-              <input
-                type="checkbox"
-                className="me-3"
-                checked={selectItems.size === cartProduct.size}
-                onChange={toggleSelectAll}
-              />
-              全選
-            </label>
+      <div className={style.checkoutBox}>
+        <div className="shadow-lg flex-row bg-white rounded p-4 d-flex align-items-center justify-content-between w-100">
+          <label>
+            <input
+              type="checkbox"
+              className="me-3"
+              checked={selectItems.size === cartProduct.size}
+              onChange={toggleSelectAll}
+            />
+            全選
+          </label>
 
-            <div className="col-6 d-flex align-items-center justify-content-end">
-              {showWarning && (
-                <Modal show={showWarning} onHide={() => setShowWarning(false)}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>提示</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>請先勾選商品再進行結帳</Modal.Body>
-                  <Modal.Footer>
-                    <Button
-                      style={{ backgroundColor: "#ffa042", border: "0" }}
-                      onClick={() => setShowWarning(false)}
-                    >
-                      關閉
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-              )}
+          <div className="d-flex align-items-center">
+            {showWarning && (
+              <Modal show={showWarning} onHide={() => setShowWarning(false)}>
+                <Modal.Header closeButton>
+                  <Modal.Title>提示</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>請先勾選商品再進行結帳</Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    style={{ backgroundColor: "#ffa042", border: "0" }}
+                    onClick={() => setShowWarning(false)}
+                  >
+                    關閉
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            )}
 
-              <div className="text-end">
-                總金額<span>({selectItems.size}個商品):</span>
-                <span className="text-danger fs-4">${total}</span>
-              </div>
-              <button
-                className="btn btn-danger btn-lg text-white ms-5"
-                onClick={handleCheckout}
-              >
-                去買單
-              </button>
+            <div>
+              總金額
+              <span className="d-none d-md-inline">
+                ({selectItems.size}個商品)
+              </span>
+              :<span className="text-danger fs-4">${total}</span>
             </div>
+            <button
+              className={`${style.checkoutBtn} btn btn-danger fw-bold text-white ms-3`}
+              onClick={handleCheckout}
+            >
+              去買單
+            </button>
           </div>
         </div>
       </div>

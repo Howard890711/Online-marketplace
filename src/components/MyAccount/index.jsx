@@ -8,7 +8,7 @@ import { db } from "../../utils/firebase";
 import swal from "sweetalert";
 
 export default function MyAccount() {
-  const { userData,setUserData } = useUser();
+  const { userData, setUserData } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [sentIsLoading, setSentIsLoading] = useState(false);
@@ -23,33 +23,33 @@ export default function MyAccount() {
     birthMonth: 0,
     birthDay: 0,
     gender: "",
-    userImg: "",
+    userImg: "/images/head_shot/userImg.png",
   });
-  console.log(userData)
+  console.log(userData);
 
   useEffect(() => {
-    if (!userData)return;
+    if (!userData) return;
     setIsLoading(true);
 
-    try{
-    const { name, email, phoneNumber, birthDayDate, gender, userImg } =
-      userData;
-    const birthDay = birthDayDate?.toDate?.();
-    setFormData({
-      name: name || "",
-      email: email || "",
-      phoneNumber: phoneNumber || "",
-      birthYear: birthDay.getFullYear(),
-      birthMonth: birthDay.getMonth() + 1,
-      birthDay: birthDay.getDate(),
-      gender: gender || "",
-      userImg: userImg || "/images/head_shot/userImg.png",
-    });
-  }catch(err){
-    console.log("初始化Data錯誤",err)
-  }finally{
-    setIsLoading(false)
-  }
+    try {
+      const { name, email, phoneNumber, birthDayDate, gender, userImg } =
+        userData;
+      const birthDay = birthDayDate?.toDate?.();
+      setFormData({
+        name: name || "",
+        email: email || "",
+        phoneNumber: phoneNumber || "",
+        birthYear: birthDay ? birthDay.getFullYear() : 1980,
+        birthMonth: birthDay ? birthDay.getMonth() + 1 : 1,
+        birthDay: birthDay ? birthDay.getDate() : 1,
+        gender: gender || "",
+        userImg: userImg || "/images/head_shot/userImg.png",
+      });
+    } catch (err) {
+      console.log("初始化Data錯誤", err);
+    } finally {
+      setIsLoading(false);
+    }
   }, [userData]);
 
   const maskEmail = (email) => {
@@ -100,16 +100,16 @@ export default function MyAccount() {
         const storage = getStorage();
         const fileRef = ref(storage, `userImg/${userData.uid}.jpeg`);
         await uploadBytes(fileRef, selectedFile);
-        const newUrl= await getDownloadURL(fileRef);
-        updatedUserImg=newUrl+"?t="+new Date().getTime()
-        setFormData(prev=>({
+        const newUrl = await getDownloadURL(fileRef);
+        updatedUserImg = newUrl + "?t=" + new Date().getTime();
+        setFormData((prev) => ({
           ...prev,
-          userImg:updatedUserImg,
-        }))
-        
-        setUserData((prev)=>({
+          userImg: updatedUserImg,
+        }));
+
+        setUserData((prev) => ({
           ...prev,
-          userImg:updatedUserImg,
+          userImg: updatedUserImg,
         }));
       }
       await updateDoc(docRef, {
@@ -156,190 +156,423 @@ export default function MyAccount() {
 
   return (
     <>
-      <h2 className="ms-4">個人資料</h2>
-      <hr />
+      <h2 className="d-none d-md-block">個人資料</h2>
+      <hr className="d-none d-md-block" />
       {isLoading ? (
-        <div className="text-center" style={{ minHeight: "400px" }}>
+        <div className="text-center" style={{ minHeight: "200px" }}>
           <div className="spinner-border text-warning" role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
         </div>
       ) : (
-        <div className="formPadding row">
-          <form
-            className="d-flex flex-column gap-3 col-7"
-            onSubmit={handleOnSubmit}
-            noValidate
-          >
-            <div className="row d-flex align-items-center mb-3">
-              <label
-                htmlFor="username"
-                className="col-3  text-end fw-bold me-4"
-              >
-                使用者名稱
-              </label>
-              <input
-                type="text"
-                className="col form-control"
-                name="name"
-                value={formData.name}
-                onChange={handleInputOnChange}
-                placeholder="請輸入名稱"
-                required
-              />
-            </div>
-            <div className="row d-flex align-items-center mb-3">
-              <label htmlFor="email" className="col-3 text-end  fw-bold me-4">
-                Email
-              </label>
-              <input
-                type="text"
-                className="col form-control"
-                name="email"
-                value={
-                  emailFocused ? formData.email : maskEmail(formData.email)
-                }
-                onChange={handleInputOnChange}
-                onFocus={() => setEmailFocused(true)}
-                onBlur={() => setEmailFocused(false)}
-                placeholder="請輸入Email"
-                required
-              />
-            </div>
-            <div className="row d-flex align-items-center mb-3">
-              <label
-                htmlFor="phoneNumber"
-                className="col-3 text-end fw-bold me-4"
-              >
-                手機號碼
-              </label>
-              <input
-                type="text"
-                className="col form-control"
-                name="phoneNumber"
-                value={
-                  phoneFocused
-                    ? formData.phoneNumber
-                    : maskPhone(formData.phoneNumber)
-                }
-                onChange={handleInputOnChange}
-                onFocus={() => setPhoneFocused(true)}
-                onBlur={() => setPhoneFocused(false)}
-                placeholder="請輸入手機號碼"
-                minLength={10}
-                required
-              />
-            </div>
-            <div className="row d-flex align-items-center mb-3">
-              <label htmlFor="birthday" className="col-3 text-end fw-bold me-4">
-                生日
-              </label>
-              <div className="col d-flex gap-4 p-0">
-                <select
-                  className="form-select"
-                  name="birthYear"
-                  value={formData.birthYear}
-                  onChange={handleInputOnChange}
+        <div>
+          <div className="formPadding row d-none d-md-flex">
+            <form
+              className="d-flex flex-column gap-3 col-7"
+              onSubmit={handleOnSubmit}
+              noValidate
+            >
+              <div className="row d-flex align-items-center mb-3">
+                <label
+                  htmlFor="username"
+                  className="col-3  text-end fw-bold me-4"
                 >
-                  {Array.from(
-                    { length: new Date().getFullYear() - 1980 + 1 },
-                    (_, i) => {
-                      const year = 1980 + i;
+                  使用者名稱
+                </label>
+                <input
+                  type="text"
+                  id="username"
+                  className="col form-control"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputOnChange}
+                  placeholder="請輸入名稱"
+                  required
+                />
+              </div>
+              <div className="row d-flex align-items-center mb-3">
+                <label htmlFor="email" className="col-3 text-end  fw-bold me-4">
+                  Email
+                </label>
+                <input
+                  type="text"
+                  className="col form-control"
+                  name="email"
+                  id="email"
+                  value={
+                    emailFocused ? formData.email : maskEmail(formData.email)
+                  }
+                  onChange={handleInputOnChange}
+                  onFocus={() => setEmailFocused(true)}
+                  onBlur={() => setEmailFocused(false)}
+                  placeholder="請輸入Email"
+                  required
+                />
+              </div>
+              <div className="row d-flex align-items-center mb-3">
+                <label
+                  htmlFor="phoneNumber"
+                  className="col-3 text-end fw-bold me-4"
+                >
+                  手機號碼
+                </label>
+                <input
+                  type="text"
+                  className="col form-control"
+                  name="phoneNumber"
+                  id="phoneNumber"
+                  value={
+                    phoneFocused
+                      ? formData.phoneNumber
+                      : maskPhone(formData.phoneNumber)
+                  }
+                  onChange={handleInputOnChange}
+                  onFocus={() => setPhoneFocused(true)}
+                  onBlur={() => setPhoneFocused(false)}
+                  placeholder="請輸入手機號碼"
+                  minLength={10}
+                  required
+                />
+              </div>
+              <div className="row d-flex align-items-center mb-3">
+                <label
+                  htmlFor="birthday"
+                  className="col-3 text-end fw-bold me-4"
+                >
+                  生日
+                </label>
+                <div className="col d-flex gap-4 p-0">
+                  <select
+                    className="form-select"
+                    name="birthYear"
+                    value={formData.birthYear}
+                    onChange={handleInputOnChange}
+                  >
+                    {Array.from(
+                      { length: new Date().getFullYear() - 1980 + 1 },
+                      (_, i) => {
+                        const year = 1980 + i;
+                        return (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        );
+                      }
+                    )}
+                  </select>
+                  <select
+                    className="form-select"
+                    name="birthMonth"
+                    value={formData.birthMonth}
+                    onChange={handleInputOnChange}
+                  >
+                    {Array.from({ length: 12 }, (_, i) => {
+                      const month = 1 + i;
                       return (
-                        <option key={year} value={year}>
-                          {year}
+                        <option key={month} value={month}>
+                          {month}
                         </option>
                       );
-                    }
-                  )}
-                </select>
-                <select
-                  className="form-select"
-                  name="birthMonth"
-                  value={formData.birthMonth}
-                  onChange={handleInputOnChange}
+                    })}
+                  </select>
+                  <select
+                    className="form-select"
+                    name="birthDay"
+                    value={formData.birthDay}
+                    onChange={handleInputOnChange}
+                  >
+                    {Array.from({ length: 31 }, (_, i) => {
+                      const day = 1 + i;
+                      return (
+                        <option key={day} value={day}>
+                          {day}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+              <div className="row d-flex align-items-center mb-3">
+                <label
+                  htmlFor="gender"
+                  className="col-3 text-end  fw-bold me-4"
                 >
-                  {Array.from({ length: 12 }, (_, i) => {
-                    const month = 1 + i;
-                    return (
-                      <option key={month} value={month}>
-                        {month}
-                      </option>
-                    );
-                  })}
-                </select>
-                <select
-                  className="form-select"
-                  name="birthDay"
-                  value={formData.birthDay}
-                  onChange={handleInputOnChange}
-                >
-                  {Array.from({ length: 31 }, (_, i) => {
-                    const day = 1 + i;
-                    return (
-                      <option key={day} value={day}>
-                        {day}
-                      </option>
-                    );
-                  })}
-                </select>
+                  性別
+                </label>
+                <div className="col d-flex gap-4">
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="gender"
+                      id="male"
+                      value="male"
+                      checked={formData.gender === "male"}
+                      onChange={handleInputOnChange}
+                    />
+                    <label className="form-check-label" htmlFor="male">
+                      男性
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="gender"
+                      id="female"
+                      value="female"
+                      checked={formData.gender === "female"}
+                      onChange={handleInputOnChange}
+                    />
+                    <label className="form-check-label" htmlFor="female">
+                      女性
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="gender"
+                      id="other"
+                      value="other"
+                      checked={formData.gender === "other"}
+                      onChange={handleInputOnChange}
+                    />
+                    <label className="form-check-label" htmlFor="other">
+                      其他
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="row d-flex align-items-center">
+                <div className="col-3 me-4"></div>
+                <div className="col p-0">
+                  <button
+                    type="submit"
+                    className="myAccountBtn border-0 rounded p-2"
+                  >
+                    {sentIsLoading ? (
+                      <div className="text-center">
+                        <div
+                          className="spinner-border spinner-border-sm text-warning"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <span className="text-white">儲存</span>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div className="col-5">
+              <div className="d-flex flex-column align-items-center userImgBlock">
+                {formData.userImg && (
+                  <img
+                    src={formData.userImg}
+                    className="userImg rounded-circle"
+                    alt="userImg"
+                  />
+                )}
+                <input
+                  type="file"
+                  className="d-none"
+                  ref={fileInputRef}
+                  accept=".jpg, .jpeg, .png"
+                  onChange={handleImageChange}
+                />
+                <img
+                  className="userImgChangeBtn bg-light rounded-circle p-2"
+                  src="/images/icons/camera.png"
+                  onClick={handleButtonClick}
+                />
               </div>
             </div>
-            <div className="row d-flex align-items-center mb-3">
-              <label htmlFor="gender" className="col-3 text-end  fw-bold me-4">
-                性別
-              </label>
-              <div className="col d-flex gap-4">
-                <div className="form-check">
+          </div>
+          <div className="accountMobileBlock d-md-none">
+            <div className="userImgBlock d-flex justify-content-center align-items-center">
+              {formData.userImg && (
+                <img
+                  src={formData.userImg}
+                  className="userImg rounded-circle"
+                  alt="userImg"
+                />
+              )}
+              <input
+                type="file"
+                className="d-none"
+                ref={fileInputRef}
+                accept=".jpg, .jpeg, .png"
+                onChange={handleImageChange}
+              />
+              <img
+                className="userImgChangeBtn bg-light rounded-circle p-2"
+                src="/images/icons/camera.png"
+                onClick={handleButtonClick}
+              />
+            </div>
+            <form className="d-grid mt-3" onSubmit={handleOnSubmit}>
+              <div className="formDetailBlock">
+                <label htmlFor="mobileUsername">使用者名稱</label>
+                <input
+                  type="text"
+                  id="mobileUsername"
+                  className="border-0 text-end formInputFocus"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputOnChange}
+                  placeholder="請輸入名稱"
+                  required
+                />
+              </div>
+              <hr />
+              <div className="formDetailBlock">
+                <label htmlFor="mobileEmail">Email</label>
+                <input
+                  type="text"
+                  id="mobileEmail"
+                  className="border-0 text-end formInputFocus"
+                  name="email"
+                  onChange={handleInputOnChange}
+                  placeholder="請輸入Email"
+                  value={
+                    emailFocused ? formData.email : maskEmail(formData.email)
+                  }
+                  onFocus={() => setEmailFocused(true)}
+                  onBlur={() => setEmailFocused(false)}
+                  required
+                />
+              </div>
+              <hr />
+              <div className="formDetailBlock">
+                <label htmlFor="mobilePhoneNumber">手機號碼</label>
+                <input
+                  type="text"
+                  id="mobilePhoneNumber"
+                  className="border-0 text-end formInputFocus"
+                  name="phoneNumber"
+                  value={
+                    phoneFocused
+                      ? formData.phoneNumber
+                      : maskPhone(formData.phoneNumber)
+                  }
+                  onChange={handleInputOnChange}
+                  onFocus={() => setPhoneFocused(true)}
+                  onBlur={() => setPhoneFocused(false)}
+                  placeholder="請輸入手機號碼"
+                  minLength={10}
+                  required
+                />
+              </div>
+              <hr />
+              <div className="formDetailBlock">
+                <label htmlFor="birthday">生日</label>
+                <div className="d-flex gap-3">
+                  <select
+                    name="birthYear"
+                    value={formData.birthYear}
+                    onChange={handleInputOnChange}
+                    className="border-secondary bg-white rounded text-dark"
+                  >
+                    {Array.from(
+                      { length: new Date().getFullYear() - 1980 + 1 },
+                      (_, i) => {
+                        const year = 1980 + i;
+                        return (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        );
+                      }
+                    )}
+                  </select>
+                  <select
+                    name="birthMonth"
+                    value={formData.birthMonth}
+                    onChange={handleInputOnChange}
+                    className="bg-white border-secondary rounded text-dark"
+                  >
+                    {Array.from({ length: 12 }, (_, i) => {
+                      const month = 1 + i;
+                      return (
+                        <option key={month} value={month}>
+                          {month}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <select
+                    name="birthDay"
+                    value={formData.birthDay}
+                    onChange={handleInputOnChange}
+                    className="border-secondary bg-white rounded text-dark"
+                  >
+                    {Array.from({ length: 31 }, (_, i) => {
+                      const day = 1 + i;
+                      return (
+                        <option key={day} value={day}>
+                          {day}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+              <hr />
+              <div className="formDetailBlock">
+                <label>性別</label>
+                <div className="d-flex align-items-center gap-3">
+                  <div>
                   <input
-                    className="form-check-input"
                     type="radio"
                     name="gender"
-                    id="male"
+                    id="mobileMale"
                     value="male"
+                    className="me-1"
                     checked={formData.gender === "male"}
                     onChange={handleInputOnChange}
                   />
-                  <label className="form-check-label" htmlFor="male">
-                    男性
-                  </label>
-                </div>
-                <div className="form-check">
+                  <label htmlFor="mobileMale">男性</label>
+                  </div>
+                  <div>
+
                   <input
-                    className="form-check-input"
                     type="radio"
                     name="gender"
-                    id="female"
+                    id="mobileFemale"
                     value="female"
+                    className="me-1"
                     checked={formData.gender === "female"}
                     onChange={handleInputOnChange}
                   />
-                  <label className="form-check-label" htmlFor="female">
+                  <label htmlFor="mobileFemale">
                     女性
                   </label>
-                </div>
-                <div className="form-check">
+                  </div>
+                  <div>
+
                   <input
-                    className="form-check-input"
                     type="radio"
                     name="gender"
-                    id="other"
+                    id="mobileOther"
                     value="other"
+                    className="me-1"
                     checked={formData.gender === "other"}
                     onChange={handleInputOnChange}
                   />
-                  <label className="form-check-label" htmlFor="other">
+                  <label htmlFor="mobileOther">
                     其他
                   </label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="row d-flex align-items-center">
-              <div className="col-3 me-4"></div>
-              <div className="col p-0">
+              <div className="mt-5">
                 <button
                   type="submit"
-                  className="myAccountBtn border-0 rounded p-2"
+                  className="myAccountBtn border-0 rounded p-2 w-100"
                 >
                   {sentIsLoading ? (
                     <div className="text-center">
@@ -355,32 +588,7 @@ export default function MyAccount() {
                   )}
                 </button>
               </div>
-            </div>
-          </form>
-
-          <div className="userImgBox col-5">
-            <div className="d-flex flex-column align-items-center">
-              {formData.userImg && (
-                <img
-                  src={formData.userImg}
-                  className="userImg rounded-circle"
-                  alt="userImg"
-                />
-              )}
-              <input
-                type="file"
-                className="d-none"
-                ref={fileInputRef}
-                accept=".jpg, .jpeg, .png"
-                onChange={handleImageChange}
-              />
-              <input
-                type="button"
-                className="mt-4"
-                value="更改圖片"
-                onClick={handleButtonClick}
-              />
-            </div>
+            </form>
           </div>
         </div>
       )}

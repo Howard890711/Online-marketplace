@@ -45,8 +45,8 @@ export default function ChangePassword() {
         button: true,
         dangerMode: true,
       });
-      form.classList.remove("was-balidated")
-      setIsLoading(false)
+      form.classList.remove("was-balidated");
+      setIsLoading(false);
       return;
     }
     try {
@@ -63,7 +63,7 @@ export default function ChangePassword() {
       let errorMsg = "更改失敗";
       if (err.code === "auth/wrong-password") errorMsg = "舊密碼錯誤";
       else if (err.code === "auth/weak-password") errorMsg = "密碼太簡單";
-      swal({ title: errorMsg, icon: "error",button:true,dangerMode:true });
+      swal({ title: errorMsg, icon: "error", button: true, dangerMode: true });
       console.error("更新失敗", err);
     } finally {
       setFormData({
@@ -78,9 +78,9 @@ export default function ChangePassword() {
 
   return (
     <div>
-      <h2 className="ms-4">更改密碼</h2>
+      <h2>更改密碼</h2>
       <hr />
-      <div className="changePasswordPadding">
+      <div className="changePasswordPadding d-none d-md-block">
         <form
           className="d-flex flex-column gap-3 col-auto"
           onSubmit={onSubmitChangePassword}
@@ -130,9 +130,17 @@ export default function ChangePassword() {
                 onClick={() => setShowNewPassword((prev) => !prev)}
               >
                 {showNewPassword ? (
-                  <img src="/images/icons/openEyes.png" className="eyes" alt="openEyes"/>
+                  <img
+                    src="/images/icons/openEyes.png"
+                    className="eyes"
+                    alt="openEyes"
+                  />
                 ) : (
-                  <img src="/images/icons/closeEyes.png" className="eyes" alt="closeEyes"/>
+                  <img
+                    src="/images/icons/closeEyes.png"
+                    className="eyes"
+                    alt="closeEyes"
+                  />
                 )}
               </button>
             </div>
@@ -163,9 +171,17 @@ export default function ChangePassword() {
                 onClick={() => setShowConfirmPassword((prev) => !prev)}
               >
                 {showConfirmPassword ? (
-                  <img src="/images/icons/openEyes.png" className="eyes" alt="openEyes"/>
+                  <img
+                    src="/images/icons/openEyes.png"
+                    className="eyes"
+                    alt="openEyes"
+                  />
                 ) : (
-                  <img src="/images/icons/closeEyes.png" className="eyes" alt="closeEyes"/>
+                  <img
+                    src="/images/icons/closeEyes.png"
+                    className="eyes"
+                    alt="closeEyes"
+                  />
                 )}
               </button>
             </div>
@@ -180,7 +196,10 @@ export default function ChangePassword() {
               >
                 {isLoading ? (
                   <div className="text-center">
-                    <div className="spinner-border spinner-border-sm text-warning" role="status">
+                    <div
+                      className="spinner-border spinner-border-sm text-warning"
+                      role="status"
+                    >
                       <span className="visually-hidden">Loading...</span>
                     </div>
                   </div>
@@ -189,6 +208,119 @@ export default function ChangePassword() {
                 )}
               </button>
             </div>
+          </div>
+        </form>
+      </div>
+      <div className="changePasswordPadding d-md-none">
+        <form
+          className="d-flex flex-column gap-3"
+          onSubmit={onSubmitChangePassword}
+          noValidate
+        >
+          <div className="changePasswordBlock">
+            <label htmlFor="oldPassword" className="text-end fw-bold">
+              舊密碼
+            </label>
+            <input
+              type="password"
+              name="oldPassword"
+              id="oldPassword"
+              value={formData.oldPassword}
+              placeholder="請輸入舊的密碼"
+              onChange={handleChangePassword}
+              required
+            />
+          </div>
+          <div className="changePasswordBlock">
+            <label htmlFor="newPassword" className="text-end fw-bold">
+              新密碼
+            </label>
+            <div className="position-relative">
+              <input
+                type={showNewPassword ? "text" : "password"}
+                name="newPassword"
+                id="newPassword"
+                value={formData.newPassword}
+                placeholder="請輸入新的密碼"
+                onChange={handleChangePassword}
+                minLength={6}
+                required
+              />
+              <button
+                type="button"
+                className="btn btn-outline-secondary position-absolute 
+              translate-middle-y top-50 end-0 border-0 buttonNoHover"
+                onClick={() => setShowNewPassword((prev) => !prev)}
+              >
+                {showNewPassword ? (
+                  <img
+                    src="/images/icons/openEyes.png"
+                    className="eyes"
+                    alt="openEyes"
+                  />
+                ) : (
+                  <img
+                    src="/images/icons/closeEyes.png"
+                    className="eyes"
+                    alt="closeEyes"
+                  />
+                )}
+              </button>
+            </div>
+          </div>
+          <div className="changePasswordBlock">
+            <label htmlFor="confirmPassword" className="text-end fw-bold">
+              確認密碼
+            </label>
+            <div className="position-relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                id="confirmPassword"
+                value={formData.confirmPassword}
+                placeholder="請再次輸入新密碼"
+                onChange={handleChangePassword}
+                minLength={6}
+                required
+              />
+              <button
+                type="button"
+                className="btn btn-outline-secondary position-absolute 
+              translate-middle-y top-50 end-0 border-0 buttonNoHover"
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+              >
+                {showConfirmPassword ? (
+                  <img
+                    src="/images/icons/openEyes.png"
+                    className="eyes"
+                    alt="openEyes"
+                  />
+                ) : (
+                  <img
+                    src="/images/icons/closeEyes.png"
+                    className="eyes"
+                    alt="closeEyes"
+                  />
+                )}
+              </button>
+            </div>
+          </div>
+
+          <div className="d-flex align-items-center mt-3">
+            <button type="submit" className="passWordBtn border-0 p-2 rounded w-100">
+              {isLoading ? (
+                <div className="text-center w-100">
+                  <div
+                    className="spinner-border spinner-border-sm text-warning"
+                    role="status"
+                  >
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              ) : (
+                <span className="text-white">儲存</span>
+              )}
+            </button>
           </div>
         </form>
       </div>

@@ -142,5 +142,9 @@
     width: 100px;
     font-size: 14px;
   }
+
+  .userHeadShotBtn.dropdown-toggle::after {
+    border-top-color: black;
+  }
   
 }

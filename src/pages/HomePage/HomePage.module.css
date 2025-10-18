@@ -2,14 +2,6 @@
   padding: 60px 100px;
 }
 
-/* .productGrid {
-  display: grid;
-  grid-template-columns: repeat(5,1fr);
-  row-gap: 40px;
-  column-gap: 16px;
-} */
-
-
 .productBox:hover {
   transform: scale(1.1);
 }
@@ -62,7 +54,7 @@
 
 @media screen and (max-width: 767px) {
   .homePage {
-    padding: 10px;
+    padding: 10px 20px;
   }
 
   .productBox:hover {

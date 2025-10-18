@@ -8,9 +8,10 @@ import { useUser } from "../../UserContext";
 export default function Header() {
   const { cartData, userData } = useUser();
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [userImg, setUserImg] = useState(null);
+  const [userImg, setUserImg] = useState("/images/head_shot/userImg.png");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navigate = useNavigate();
+  console.log(userImg)
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -103,7 +104,7 @@ export default function Header() {
                   aria-expanded="false"
                 >
                   <img
-                    src={userImg}
+                    src={userImg||"/images/head_shot/userImg.png"}
                     className="userHeadShot rounded-circle"
                     alt="userImg"
                   />

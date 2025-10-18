@@ -22,10 +22,9 @@ export default function ShoppingHistory() {
   const carouselInstanceRef = useRef(null); //儲存綁定的實例
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchResults, setSearchResults] = useState(null);
-  const [searched,setSearched]=useState(false)
-  const displayOrders = searched ? searchResults:orders;
+  const [searched, setSearched] = useState(false);
+  const displayOrders = searched ? searchResults : orders;
   console.log(orders);
-
 
   useEffect(() => {
     setIsLoading(true);
@@ -59,7 +58,7 @@ export default function ShoppingHistory() {
     });
     Promise.all(orderPromise)
       .then(() => {
-        setOrders(Object.values(updataOrder));
+        setOrders(Object.values(updataOrder).sort((a,b)=>b.orderDate.toMillis()-a.orderDate.toMillis()));
         setIsLoading(false);
       })
       .catch((error) => {
@@ -210,7 +209,7 @@ export default function ShoppingHistory() {
 
   return (
     <div className="shoppingListPage">
-      <h2 className="ms-4">歷史訂單</h2>
+      <h2>歷史訂單</h2>
       <div className="historySearchBox bg-light mb-3">
         <img
           className="historySearchIcon"
@@ -254,9 +253,9 @@ export default function ShoppingHistory() {
                       className="productImg border"
                       alt="productImg"
                     />
-                    <div className="ms-3 d-flex flex-column gap-4 w-100">
-                      <div className="productName">
-                        <h5>{product.name}</h5>
+                    <div className="ms-3 d-flex flex-column justify-content-between w-100">
+                      <div>
+                        <h5 className="HistoryProductName">{product.name}</h5>
                       </div>
                       <div className="d-flex justify-content-between align-items-center">
                         <span className="">x{product.productQuantity}</span>
@@ -270,7 +269,7 @@ export default function ShoppingHistory() {
               })}
             </div>
 
-            <div className="orderInfo p-3">
+            <div className="orderInfo p-3 d-none d-md-block">
               <div className="text-end mb-3">
                 <span className="text-secondary">訂單金額：</span>
                 <span className="text-danger fw-bold fs-5">
@@ -299,6 +298,34 @@ export default function ShoppingHistory() {
                     買家評論
                   </button>
                 </div>
+              </div>
+            </div>
+
+            <div className="orderInfo d-grid p-2 d-md-none gap-1">
+              <div className="d-flex justify-content-between">
+                <span className="text-secondary">訂單金額：</span>
+                <span className="text-danger fw-bold fs-5">
+                  ${order.orderSubtotal}
+                </span>
+              </div>
+              <span className="">訂單編號:{order.orderId}</span>
+              <span className="fw-bold text-danger">
+                訂單時間:{formDate(order.orderDate)}
+              </span>
+
+              <div className="d-flex gap-1">
+                <button
+                  className="p-2 w-50 text-white fw-bold rounded buyAgainBtn"
+                  onClick={() => handleBuyAgain(order)}
+                >
+                  再買一次
+                </button>
+                <button
+                  className="p-2 w-50 fw-bold commentBtn rounded"
+                  onClick={() => handleShowModal(order)}
+                >
+                  買家評論
+                </button>
               </div>
             </div>
           </div>
@@ -365,7 +392,8 @@ export default function ShoppingHistory() {
                         className="border me-2"
                         alt="ModalProductImg"
                       />
-                      <span className="fw-bold fs-5">{product.name}</span>
+                      <div>
+                        <h5 className="fw-bold fs-5 modalProductName">{product.name}</h5></div>
                     </div>
 
                     <Form onSubmit={(e) => handleSubmit(e, product.productId)}>

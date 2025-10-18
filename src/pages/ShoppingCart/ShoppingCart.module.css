@@ -1,70 +1,116 @@
-.shoppingCartPage{
-    position: relative;
+.shoppingCartContainer {
+  padding: 60px 100px;
 }
 
-.shoppingCartContainer{
-    padding: 60px 100px;
+.cartGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
 }
 
+input[type="checkbox"] {
+  transform: scale(1.5);
+}
 
-.cartGrid{
+.titleGrid {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.contentGrid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .productDelete:hover {
+    text-decoration: underline;
+  }
+}
+
+.productImg {
+  height: 100px;
+  width: 100px;
+}
+
+.productName {
+  width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* 顯示2行 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+.productQuantity {
+  width: 40px;
+}
+
+.shadowTop {
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* 上方陰影 */
+}
+
+.checkoutBox {
+  padding: 0 100px;
+  position: sticky;
+  bottom: 0;
+  margin-bottom: 0.5rem;
+}
+
+.checkoutBtn {
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+}
+
+.quantityBtn{
+  border: 1px solid var(--bs-border-color)
+}
+
+@media screen and (max-width: 767px) {
+  .shoppingCartContainer {
+    padding: 10px;
+  }
+
+  .cartGrid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
-}
+  }
 
-input[type="checkbox"]{
-    transform: scale(1.5);
-}
+  .productImg {
+    height: 80px;
+    width: 80px;
+  }
 
-.titleGrid{
-    display: flex;
-    justify-content: center;
-    text-align: center;
-}
-
-.contentGrid{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .productDelete:hover{
-        text-decoration: underline;
-    }
-}
-
-.cartProduct{
-   background-color: white; 
-   padding:20px;
-}
-
-.productImg{
-    height: 100px;
-    width: 100px;
-}
-
-.productName{
-    width: 200px;
+  .productName {
+    width: 100%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3; /* 顯示2行 */
+    -webkit-line-clamp: 1; /* 顯示2行 */
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
-}
+  }
 
-.productQuantity{
-    width: 40px;
-}
+  .productQuantity {
+    width: 30px;
+  }
 
-
-.shadowTop{
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* 上方陰影 */
-}
-
-.checkoutBox{
-    padding: 0 100px!important;
-    position: sticky;
+  .checkoutBox {
+    padding: 0;
+    position: fixed;
     bottom: 0;
-    margin-bottom: 5px;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .checkoutBtn {
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+  }
+
+  .quantityBtn{
+    border: 0;
+  }
 }

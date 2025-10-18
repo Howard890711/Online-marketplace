@@ -1,56 +1,128 @@
 .checkoutPage {
   padding: 60px 100px;
+}
 
-  .titleBox {
-    padding: 20px 30px;
-    background-color: white;
+.titleBox {
+  padding: 20px 30px;
+  background-color: white;
+}
+
+.productListBox {
+  padding: 30px;
+  background-color: white;
+}
+
+.productImg {
+  height: 100px;
+  width: 100px;
+}
+
+.productName {
+  width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  margin-left: 1rem;
+}
+
+.recipienBox {
+  padding: 30px;
+  background-color: white;
+}
+
+.paymentMethodBox {
+  padding: 30px;
+  background-color: white;
+}
+
+.totalAmountBox {
+  padding: 30px;
+  background-color: white;
+
+  .placeOrderBtn {
+    color: white;
+    background-color: var(--main-color);
+    width: 100%;
+    height: 100%;
+    border: 0;
+    max-width: 250px;
+  }
+}
+
+.mobilePaySelectBtn{
+  border:1px solid #81c784;
+  color: #2e7d32;
+}
+
+.mobilePaySelectBtnChange{
+  border:1px solid var(--main-color);
+  color: var(--main-color);
+}
+
+@media screen and (max-width: 767px) {
+  .checkoutPage {
+    padding: 10px;
+    padding-bottom: 20%;
   }
 
   .productListBox {
-    padding: 30px;
-    background-color: white;
-
-    .productImg {
-      height: 100px;
-      width: 100px;
-    }
-  }
-
-  .recipienBox {
-    padding: 30px;
-    background-color: white;
-  }
-
-  .paymentMethodBox {
-    padding: 30px;
-    background-color: white;
-
-   .mobilePaymentBtn{
     padding: 10px;
-    border: 1px solid black;
     background-color: white;
-   }
-
-   .mobilePaymentBtnClick{
-    border-color: red;
-    color: red;
-   }
-
-
-
   }
 
-  .totalAmountBox{
-    padding: 30px;
-    background-color: white;
-
-    .placeOrderBtn{
-        color: white;
-        background-color: #ffa042;
-        width: 100%;
-        height: 100%;
-        border: 0;
-        max-width: 250px;
-    }
+  .productImg {
+    height: 90px;
+    width: 90px;
   }
+
+  .productName {
+    width: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    margin-left: 0;
+  }
+
+  .phoneShippingInformation{
+    background-color: inherit;
+    text-align: left;
+  }
+  
+  .paymentIcon{
+    height: 30px;
+    width: 30px;
+    margin-right: 0.5rem;
+  }
+
+  .tickIcon{
+    height: 30px;
+    width: 30px;
+  }
+
+  .shippingModalInput{
+    width: 70%;
+  }
+
+  .shippingModalInput:focus{
+    outline: none;
+  }
+
+  .modalBottom {
+    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    transform: none !important; /* 不要 translateX */
+  }
+
+  
+
+
 }
