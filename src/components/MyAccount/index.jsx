@@ -388,6 +388,7 @@ export default function MyAccount() {
                   className="userImgChangeBtn bg-light rounded-circle p-2"
                   src="/images/icons/camera.png"
                   onClick={handleButtonClick}
+                  alt="changeImgIcon"
                 />
               </div>
             </div>
@@ -412,6 +413,7 @@ export default function MyAccount() {
                 className="userImgChangeBtn bg-light rounded-circle p-2"
                 src="/images/icons/camera.png"
                 onClick={handleButtonClick}
+                alt="changeImgIcon"
               />
             </div>
             <form className="d-grid mt-3" onSubmit={handleOnSubmit}>

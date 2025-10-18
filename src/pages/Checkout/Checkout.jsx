@@ -85,7 +85,7 @@ export default function Checkout() {
   const orderTotal = useMemo(() => {
     //算總額
     return productsTotal + formData.recipientData.pickupMethod.price;
-  }, [formData.recipientData.pickupMethod]);
+  }, [productsTotal,formData.recipientData.pickupMethod]);
 
   useEffect(() => {
     const updataOrder = new Map();
@@ -819,10 +819,11 @@ export default function Checkout() {
               <img
                 src={formData.paymentMethodData.paymentMethod.img}
                 className={style.paymentIcon}
+                alt="paymentImg"
               />
               <span>{formData.paymentMethodData.paymentMethod.label}</span>
             </div>
-            <img src="images/icons/tick.png" className={style.tickIcon} />
+            <img src="images/icons/tick.png" className={style.tickIcon} alt="tickIcon"/>
           </div>
 
           {formData.paymentMethodData.paymentMethod.value === "creditCard" && (
@@ -992,7 +993,7 @@ export default function Checkout() {
                     key={option.value}
                   >
                     <div className="d-flex justify-content-center align-items-center">
-                      <img src={option.img} className={style.paymentIcon} />
+                      <img src={option.img} className={style.paymentIcon} alt="paymentIcon"/>
                       <span>{option.label}</span>
                     </div>
                     <input

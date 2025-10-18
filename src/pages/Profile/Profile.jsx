@@ -67,6 +67,7 @@ export default function Profile() {
             <img
               src="/images/head_shot/userImg.png"
               className={style.btnIcon}
+              alt="MyAccountIcon"
             />
             <span className="text-dark">個人資料</span>
           </button>
@@ -77,6 +78,7 @@ export default function Profile() {
             <img
               src="/images/icons/changePassword.png"
               className={style.btnIcon}
+              alt="changePasswordIcon"
             />
             <span className="text-dark">變更密碼</span>
           </button>
@@ -87,6 +89,7 @@ export default function Profile() {
             <img
               src="/images/icons/purchareHistory.png"
               className={style.btnIcon}
+              alt="purchareHistoryIcon"
             />
             <span className="text-dark">購買清單</span>
           </button>
