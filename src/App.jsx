@@ -3,16 +3,18 @@ import "./App.css";
 import HomePage from "./pages/HomePage/HomePage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import MobileHeader from "./MobileHeader";
-import LoginForm from "./pages/LoginForm/LoginForm";
-import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
-import Profile from "./pages/Profile/Profile";
-import Checkout from "./pages/Checkout/Checkout";
 import { UserProvider } from "./UserContext";
 import ScrollToTop from "./utils/scrollToTap";
 import ProtectedRoute from "./pages/ProtectedRoute";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
+
+const ProductDetail=lazy(()=>import("./pages/ProductDetail/ProductDetail"));
+const LoginForm=lazy(()=>import("./pages/LoginForm/LoginForm"));
+const Profile=lazy(()=>import("./pages/Profile/Profile"));
+const ShoppingCart=lazy(()=>import("./pages/ShoppingCart/ShoppingCart"))
+const Checkout=lazy(()=>import("./pages/Checkout/Checkout"));
+
 
 function AppLayout() {
   const location = useLocation();
@@ -40,6 +42,7 @@ function AppLayout() {
       {isMobile && isHiddenPage && <MobileHeader pathName={pathName} />}
       <div className="flex-grow-1">
         <ScrollToTop />
+        <Suspense fallback={<div className="text-center">Loading....</div>}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/Search" element={<HomePage />} />
@@ -51,6 +54,7 @@ function AppLayout() {
             <Route path="/Checkout" element={<Checkout />} />
           </Route>
         </Routes>
+        </Suspense>
       </div>
       <Footer className="d-none d-md-block" />
     </div>
